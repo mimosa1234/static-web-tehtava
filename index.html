@@ -2,10 +2,68 @@
 <html lang="fi">
 <head>
     <meta charset="UTF-8">
-    <title>Testisivu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI-laskuri</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            max-width: 400px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+        }
+        button {
+            padding: 10px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .tulos {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hei Mimosa! 🎉</h1>
-    <p>Tämä on minun ensimmäinen Renderiin julkaistu staattinen sivu.</p>
+
+    <h1>BMI-laskuri</h1>
+
+    <label>Paino (kg):</label>
+    <input type="number" id="paino" placeholder="Esim. 65">
+
+    <label>Pituus (cm):</label>
+    <input type="number" id="pituus" placeholder="Esim. 170">
+
+    <button onclick="laskeBMI()">Laske BMI</button>
+
+    <div class="tulos" id="tulos"></div>
+
+    <script>
+        function laskeBMI() {
+            const paino = parseFloat(document.getElementById("paino").value);
+            const pituus = parseFloat(document.getElementById("pituus").value) / 100;
+
+            if (!paino || !pituus) {
+                document.getElementById("tulos").innerText = "Anna paino ja pituus.";
+                return;
+            }
+
+            const bmi = (paino / (pituus * pituus)).toFixed(1);
+
+            let tila = "";
+            if (bmi < 18.5) tila = "Alipaino";
+            else if (bmi < 25) tila = "Normaali paino";
+            else if (bmi < 30) tila = "Ylipaino";
+            else tila = "Lihavuus";
+
+            document.getElementById("tulos").innerHTML =
+                `BMI: ${bmi}<br>Tulkinta: ${tila}`;
+        }
+    </script>
+
 </body>
 </html>
+
